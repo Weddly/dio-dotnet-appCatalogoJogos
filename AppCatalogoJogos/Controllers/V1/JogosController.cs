@@ -22,7 +22,17 @@ namespace AppCatalogoJogos.Controllers.V1
         {
             _jogoService = jogoService;
         }
-
+        /// <summary>
+        /// Buscar todos os jogos de forma paginada
+        /// </summary>
+        /// <remarks>
+        /// Não é possível retornar os jogos sem paginação
+        /// </remarks>
+        /// <param name="pagina">Indica qual a página que está sendo consultado. Mínimo 1</param>
+        /// <param name="quantidade">Indica a quantidade de registros por página. Mínimo 1 e máximo 50</param>
+        /// <response code="200">Retorna a lista de jogos</response>
+        /// <response code="204">Caso não haja jogos</response>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<JogoViewModel>>> Obter([FromQuery, Range(1, int.MaxValue)] int pagina = 1, [FromQuery, Range(1, 50)] int quantidade = 5)
         {
@@ -33,7 +43,14 @@ namespace AppCatalogoJogos.Controllers.V1
             return Ok(jogos);
         }
 
-        [HttpGet("(idJogo:guid)")]
+        /// <summary>
+        /// Buscar o jogo pelo seu Id
+        /// </summary>
+        /// <param name="idJogo">Id do jogo buscado</param>
+        /// <response code="200">Retorna o jogo buscado</response>
+        /// <response code="204">Caso não haja jogo com esse Id</response>
+        /// <returns></returns>
+        [HttpGet("{idJogo:guid}")]
         public async Task<ActionResult<JogoViewModel>> Obter([FromRoute]Guid idJogo)
         {
             var jogo = await _jogoService.Obter(idJogo);
@@ -43,6 +60,13 @@ namespace AppCatalogoJogos.Controllers.V1
             return Ok(jogo);
         }
 
+        /// <summary>
+        /// Inserir jogo no banco de dados
+        /// </summary>
+        /// <param name="jogoInputModel">Objeto jogo a ser adicionado</param>
+        /// <response code="200">Retorna o jogo buscado</response>
+        /// <response code="422">Caso já exista um jogo com este nome e produtora cadastrado</response>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<JogoViewModel>> InserirJogo([FromBody] JogoInputModel jogoInputModel)
         {
@@ -57,8 +81,15 @@ namespace AppCatalogoJogos.Controllers.V1
             }
         }
 
-        [HttpPut("(idJogo:guid)")]
-        public async Task<ActionResult> AtualizarJogo([FromQuery]Guid idJogo, [FromBody] JogoInputModel jogoInputModel)
+        /// <summary>
+        /// Alterar jogo existente no banco de dados
+        /// </summary>
+        /// <param name="idJogo">Id do jogo a ser alterado</param>
+        /// <param name="jogoInputModel">Objeto jogo a ser alterado</param>
+        /// <response code="200">Retorna sucesso</response>
+        /// <response code="404">Caso não exista jogo cadastrado com o Id informado</response>
+        [HttpPut("{idJogo:guid}")]
+        public async Task<ActionResult> AtualizarJogo([FromRoute]Guid idJogo, [FromBody] JogoInputModel jogoInputModel)
         {
             try
             {
@@ -71,7 +102,14 @@ namespace AppCatalogoJogos.Controllers.V1
             }
         }
 
-        [HttpPatch("(idJogo:guid)/preco/{preco:double}")]
+        /// <summary>
+        /// Alterar preço de jogo existente no banco de dados
+        /// </summary>
+        /// <param name="idJogo">Id do jogo a ser alterado</param>
+        /// <param name="preco">Valor a ser aplicado no jogo</param>
+        /// <response code="200">Retorna sucesso</response>
+        /// <response code="404">Caso não exista jogo cadastrado com o Id informado</response>
+        [HttpPatch("{idJogo:guid}/preco/{preco:double}")]
         public async Task<ActionResult> AtualizarJogo([FromRoute]Guid idJogo, [FromRoute] double preco)
         {
             try
@@ -85,7 +123,14 @@ namespace AppCatalogoJogos.Controllers.V1
             }
         }
 
-        [HttpDelete("(idJogo:guid)")]
+        /// <summary>
+        /// Apaga jogo existente no banco de dados
+        /// </summary>
+        /// <param name="idJogo">Id do jogo a ser deletado</param>
+        /// <response code="200">Retorna sucesso</response>
+        /// <response code="404">Caso não exista jogo cadastrado com o Id informado</response>
+        /// <returns></returns>
+        [HttpDelete("{idJogo:guid}")]
         public async Task<ActionResult> ApagarJogo([FromRoute] Guid idJogo)
         {
             try

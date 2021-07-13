@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AppCatalogoJogos</name>
+    </assembly>
+    <members>
+        <member name="M:AppCatalogoJogos.Controllers.V1.CicloDeVidaIDController.Get">
+            <summary>
+            Serviço para ilustrar as diferenças entre as três diferentes formas de injeção de dependência: Singleton, Scoped e Transient
+            </summary>
+        </member>
+        <member name="M:AppCatalogoJogos.Controllers.V1.JogosController.Obter(System.Int32,System.Int32)">
+            <summary>
+            Buscar todos os jogos de forma paginada
+            </summary>
+            <remarks>
+            Não é possível retornar os jogos sem paginação
+            </remarks>
+            <param name="pagina">Indica qual a página que está sendo consultado. Mínimo 1</param>
+            <param name="quantidade">Indica a quantidade de registros por página. Mínimo 1 e máximo 50</param>
+            <response code="200">Retorna a lista de jogos</response>
+            <response code="204">Caso não haja jogos</response>
+            <returns></returns>
+        </member>
+        <member name="M:AppCatalogoJogos.Controllers.V1.JogosController.Obter(System.Guid)">
+            <summary>
+            Buscar o jogo pelo seu Id
+            </summary>
+            <param name="idJogo">Id do jogo buscado</param>
+            <response code="200">Retorna o jogo buscado</response>
+            <response code="204">Caso não haja jogo com esse Id</response>
+            <returns></returns>
+        </member>
+        <member name="M:AppCatalogoJogos.Controllers.V1.JogosController.InserirJogo(AppCatalogoJogos.InputModel.JogoInputModel)">
+            <summary>
+            Inserir jogo no banco de dados
+            </summary>
+            <param name="jogoInputModel">Objeto jogo a ser adicionado</param>
+            <response code="200">Retorna o jogo buscado</response>
+            <response code="422">Caso já exista um jogo com este nome e produtora cadastrado</response>
+            <returns></returns>
+        </member>
+        <member name="M:AppCatalogoJogos.Controllers.V1.JogosController.AtualizarJogo(System.Guid,AppCatalogoJogos.InputModel.JogoInputModel)">
+            <summary>
+            Alterar jogo existente no banco de dados
+            </summary>
+            <param name="idJogo">Id do jogo a ser alterado</param>
+            <param name="jogoInputModel">Objeto jogo a ser alterado</param>
+            <response code="200">Retorna sucesso</response>
+            <response code="404">Caso não exista jogo cadastrado com o Id informado</response>
+        </member>
+        <member name="M:AppCatalogoJogos.Controllers.V1.JogosController.AtualizarJogo(System.Guid,System.Double)">
+            <summary>
+            Alterar preço de jogo existente no banco de dados
+            </summary>
+            <param name="idJogo">Id do jogo a ser alterado</param>
+            <param name="preco">Valor a ser aplicado no jogo</param>
+            <response code="200">Retorna sucesso</response>
+            <response code="404">Caso não exista jogo cadastrado com o Id informado</response>
+        </member>
+        <member name="M:AppCatalogoJogos.Controllers.V1.JogosController.ApagarJogo(System.Guid)">
+            <summary>
+            Apaga jogo existente no banco de dados
+            </summary>
+            <param name="idJogo">Id do jogo a ser deletado</param>
+            <response code="200">Retorna sucesso</response>
+            <response code="404">Caso não exista jogo cadastrado com o Id informado</response>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
